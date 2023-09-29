@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registro de Ponto</title>
+</head>
+<body>
+    <h1>Registro de Ponto</h1>
+    
+    <label for="entrada">Horário de Entrada:</label>
+    <input type="time" id="entrada">
+    <button onclick="registrarEntrada()">Registrar Entrada</button>
+    
+    <label for="saida">Horário de Saída:</label>
+    <input type="time" id="saida">
+    <button onclick="registrarSaida()">Registrar Saída</button>
+    
+    <hr>
+    
+    <h2>Registros de Ponto:</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Entrada</th>
+                <th>Saída</th>
+            </tr>
+        </thead>
+        <tbody id="registroTabela">
+        </tbody>
+    </table>
+    
+    <script>
+        const registros = [];
+
+        function registrarEntrada() {
+            const entrada = document.getElementById("entrada").value;
+            const registro = {
+                data: new Date().toLocaleDateString(),
+                entrada: entrada,
+                saida: ""
+            };
+            
+            registros.push(registro);
+            atualizarTabela();
+        }
+
+        function registrarSaida() {
+            const saida = document.getElementById("saida").value;
+            if (registros.length > 0) {
+                registros[registros.length - 1].saida = saida;
+                atualizarTabela();
+            }
+        }
+
+        function atualizarTabela() {
+            const tabela = document.getElementById("registroTabela");
+            tabela.innerHTML = "";
+
+            registros.forEach(registro => {
+                const row = tabela.insertRow();
+                row.insertCell(0).textContent = registro.data;
+                row.insertCell(1).textContent = registro.entrada;
+                row.insertCell(2).textContent = registro.saida;
+            });
+        }
+    </script>
+</body>
+</html>
